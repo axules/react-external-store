@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General snapshot 1`] = `
+ReactExternalStore {
+  "__emitChanges__": [Function],
+  "__listeners__": [],
+  "__logger": [Function],
+  "__state__": undefined,
+  "__subscribe__": [Function],
+  "__unsubscribe__": [Function],
+  "getState": [Function],
+  "mergeState": [Function],
+  "patchState": [Function],
+  "setState": [Function],
+  "use": [Function],
+}
+`;
