@@ -1,4 +1,4 @@
-import { ReactExternalStore } from '../src';
+import { ReactExternalStore } from '../index';
 
 
 describe('General', () => {
