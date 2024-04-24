@@ -1,4 +1,5 @@
 import { ReactExternalStore } from '../index';
+import { testDelay } from './utils';
 
 
 describe('General', () => {
@@ -18,7 +19,7 @@ describe('General', () => {
     expect(onChange).toBeCalledTimes(0);
   });
 
-  test('should return call callback', () => {
+  test('should return call callback', async () => {
     const initState = { a: 99 };
     const newValue = { b: 88 };
     const onChange = jest.fn();
@@ -27,8 +28,9 @@ describe('General', () => {
     const result = store.setState(newValue);
 
     expect(result).toBe(newValue);
+    await testDelay(50);
     expect(onChange).toBeCalledTimes(1);
-    expect(onChange).toBeCalledWith();
+    expect(onChange).toBeCalledWith(store);
   });
 
   test('should remove listener', () => {

@@ -25,10 +25,19 @@ export class ReactExternalStore {
   __logger = () => null;
   __listeners__ = [];
   __state__ = undefined;
+  __emitChangesTrigger__ = null;
 
   __emitChanges__ = () => {
     this.__logger('__emitChanges__', this.__listeners__.length);
-    this.__listeners__.forEach((listener) => listener());
+    this.__listeners__.forEach((listener) => listener(this));
+  };
+
+  // Attempt to optimize listeners calls
+  __emitChangesTask__ = () => {
+    this.__logger('__emitChangesTask__', !!this.__emitChangesTrigger__);
+    clearTimeout(this.__emitChangesTrigger__);
+    // push __emitChanges__ to macro tasks JS queue
+    this.__emitChangesTrigger__ = setTimeout(() => this.__emitChanges__(), 10);
   };
 
   __subscribe__ = (callback) => {
@@ -59,11 +68,11 @@ export class ReactExternalStore {
   };
 
   /**
-   * UNSTABLE-EXPEREMENTAL
+   * UNSTABLE-EXPERIMENTAL
    * @param {*} selector
    */
   useMemoized = (selector) => {
-    const memoizedSelector = useMemo(selector, []);
+    const memoizedSelector = useMemo(() => selector, []);
     return this.use(memoizedSelector);
   };
 
@@ -95,7 +104,7 @@ export class ReactExternalStore {
 
     this.__logger('setState:update', preparedValue);
     this.__state__ = preparedValue;
-    this.__emitChanges__();
+    this.__emitChangesTask__();
     return this.__state__;
   };
 

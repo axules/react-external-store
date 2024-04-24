@@ -21,18 +21,23 @@ OR add into your `package.json` file to `dependencies` section:
 
 ```
 ReactExternalStore {
+  ReactExternalStore {
+  "__emitChangesTask__": [Function],
+  "__emitChangesTrigger__": null,
   "__emitChanges__": [Function],
   "__listeners__": [],
   "__logger": [Function],
   "__state__": undefined,
   "__subscribe__": [Function],
   "__unsubscribe__": [Function],
-  "getState": [Function],
-  "setState": [Function],
   "beforeUpdate": undefined,
-  "use": [Function],
+  "getState": [Function],
   "mergeState": [Function],
   "patchState": [Function],
+  "setState": [Function],
+  "use": [Function],
+  "useMemoized": [Function],
+}
 }
 ```
 
@@ -82,7 +87,7 @@ class TodoStoreClass extends ReactExternalStore {
     try {
       const items = await apiItemsRequest();
       this.patchState({ items, status: { loading: false, fail: false } });
-    } catch() {
+    } catch(error) {
       this.patchState({ status: { loading: false, fail: true } });
     }
   }

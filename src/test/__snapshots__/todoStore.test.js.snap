@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`todoStore snapshot 1`] = `
+TodoStoreClass {
+  "__emitChangesTask__": [Function],
+  "__emitChangesTrigger__": null,
+  "__emitChanges__": [Function],
+  "__listeners__": [],
+  "__logger": [Function],
+  "__state__": {
+    "items": [
+      {
+        "done": false,
+        "id": "t1",
+        "text": "Todo item 1",
+      },
+      {
+        "done": true,
+        "id": "t2",
+        "text": "Todo item 2",
+      },
+      {
+        "done": true,
+        "id": "t3",
+        "text": "Todo item 3",
+      },
+      {
+        "done": false,
+        "id": "t4",
+        "text": "Todo item 4",
+      },
+    ],
+    "status": {
+      "fail": false,
+      "loading": false,
+    },
+  },
+  "__subscribe__": [Function],
+  "__unsubscribe__": [Function],
+  "beforeUpdate": undefined,
+  "getState": [Function],
+  "mergeState": [Function],
+  "patchState": [Function],
+  "setState": [Function],
+  "use": [Function],
+  "useMemoized": [Function],
+}
+`;

@@ -2,6 +2,8 @@
 
 exports[`General snapshot 1`] = `
 ReactExternalStore {
+  "__emitChangesTask__": [Function],
+  "__emitChangesTrigger__": null,
   "__emitChanges__": [Function],
   "__listeners__": [],
   "__logger": [Function],
