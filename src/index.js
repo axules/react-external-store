@@ -58,23 +58,37 @@ export class ReactExternalStore {
     return useSyncExternalStore(this.__subscribe__, dataGetter);
   };
 
+  /**
+   * UNSTABLE-EXPEREMENTAL
+   * @param {*} selector
+   */
+  useMemoized = (selector) => {
+    const memoizedSelector = useMemo(selector, []);
+    return this.use(memoizedSelector);
+  };
+
   getState = () => this.__state__;
 
+  beforeUpdate = undefined;
   // beforeUpdate = (nextValue, prevValue) => {
   //   return nextValue;
   // };
 
   setState = (value) => {
     this.__logger('setState:start', value);
-    if (this.__state__ === value || Object.is(this.__state__, value)) {
+    let preparedValue = typeof value === 'function'
+      ? value(this.__state__)
+      : value;
+
+    if (this.__state__ === preparedValue || Object.is(this.__state__, preparedValue)) {
       return this.__state__;
     }
 
-    const preparedValue = this.beforeUpdate
-      ? this.beforeUpdate(value, this.__state__)
-      : value;
+    if (this.beforeUpdate) {
+      preparedValue = this.beforeUpdate(preparedValue, this.__state__);
+      this.__logger('setState:beforeUpdate', preparedValue);
+    }
 
-    this.__logger('setState:beforeUpdate', preparedValue);
     if (this.__state__ === preparedValue || Object.is(this.__state__, preparedValue)) {
       return this.__state__;
     }
