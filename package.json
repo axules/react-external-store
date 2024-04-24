@@ -2,11 +2,15 @@
   "name": "react-external-store",
   "version": "1.2.2",
   "description": "Base class for React.useSyncExternalStore",
-  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axules/react-external-store"
+  },
+  "main": "./dist/index.js",
   "files": [
     "src",
     "dist",
-    "LICENSE",
+    "LICENSE.md",
     "README.md"
   ],
   "scripts": {
