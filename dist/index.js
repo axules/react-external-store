@@ -23,9 +23,18 @@ class ReactExternalStore {
   __logger = () => null;
   __listeners__ = [];
   __state__ = undefined;
+  __emitChangesTrigger__ = null;
   __emitChanges__ = () => {
     this.__logger('__emitChanges__', this.__listeners__.length);
-    this.__listeners__.forEach(listener => listener());
+    this.__listeners__.forEach(listener => listener(this));
+  };
+
+  // Attempt to optimize listeners calls
+  __emitChangesTask__ = () => {
+    this.__logger('__emitChangesTask__', !!this.__emitChangesTrigger__);
+    clearTimeout(this.__emitChangesTrigger__);
+    // push __emitChanges__ to macro tasks JS queue
+    this.__emitChangesTrigger__ = setTimeout(() => this.__emitChanges__(), 10);
   };
   __subscribe__ = callback => {
     this.__logger('subscribe', this.__listeners__.length + 1);
@@ -50,25 +59,37 @@ class ReactExternalStore {
     }, [selector]);
     return (0, _react.useSyncExternalStore)(this.__subscribe__, dataGetter);
   };
-  getState = () => this.__state__;
 
+  /**
+   * UNSTABLE-EXPERIMENTAL
+   * @param {*} selector
+   */
+  useMemoized = selector => {
+    const memoizedSelector = (0, _react.useMemo)(() => selector, []);
+    return this.use(memoizedSelector);
+  };
+  getState = () => this.__state__;
+  beforeUpdate = undefined;
   // beforeUpdate = (nextValue, prevValue) => {
   //   return nextValue;
   // };
 
   setState = value => {
     this.__logger('setState:start', value);
-    if (this.__state__ === value || Object.is(this.__state__, value)) {
+    let preparedValue = typeof value === 'function' ? value(this.__state__) : value;
+    if (this.__state__ === preparedValue || Object.is(this.__state__, preparedValue)) {
       return this.__state__;
     }
-    const preparedValue = this.beforeUpdate ? this.beforeUpdate(value, this.__state__) : value;
-    this.__logger('setState:beforeUpdate', preparedValue);
+    if (this.beforeUpdate) {
+      preparedValue = this.beforeUpdate(preparedValue, this.__state__);
+      this.__logger('setState:beforeUpdate', preparedValue);
+    }
     if (this.__state__ === preparedValue || Object.is(this.__state__, preparedValue)) {
       return this.__state__;
     }
     this.__logger('setState:update', preparedValue);
     this.__state__ = preparedValue;
-    this.__emitChanges__();
+    this.__emitChangesTask__();
     return this.__state__;
   };
 
