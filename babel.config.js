@@ -7,7 +7,7 @@ module.exports = {
       corejs: '3.37',
       loose: true,
       forceAllTransforms: false,
-      targets: 'chrome 80'
+      targets: 'chrome 80, safari 12.1, ios 12.1'
     }]
   ]
 }
