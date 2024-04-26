@@ -4,40 +4,47 @@ It is base general class to simplify using of `useSyncExternalStore` in React co
 
 ### Install
 
-```
+```bash
 npm install react-external-store
+```
+
+OR install from github
+
+
+```bash
+npm install https://git@github.com/axules/react-external-store
 ```
 
 OR add into your `package.json` file to `dependencies` section:
 
-```
+```json
 "dependencies": {
   ...
-  "react-external-store" : "git://git@github.com/axules/react-external-store.git#master"
+  "react-external-store" : "git+https://git@github.com/axules/react-external-store.git"
 }
 ```
 
 ### Base methods and fields
 
-```
+```json
 ReactExternalStore {
   ReactExternalStore {
-  "__emitChangesTask__": [Function],
-  "__emitChangesTrigger__": null,
-  "__emitChanges__": [Function],
-  "__listeners__": [],
-  "__logger": [Function],
-  "__state__": undefined,
-  "__subscribe__": [Function],
-  "__unsubscribe__": [Function],
-  "beforeUpdate": undefined,
-  "getState": [Function],
-  "mergeState": [Function],
-  "patchState": [Function],
-  "setState": [Function],
-  "use": [Function],
-  "useMemoized": [Function],
-}
+    "__emitChangesTask__": [Function],
+    "__emitChangesTrigger__": null,
+    "__emitChanges__": [Function],
+    "__listeners__": [],
+    "__logger": [Function],
+    "__state__": undefined,
+    "__subscribe__": [Function],
+    "__unsubscribe__": [Function],
+    "beforeUpdate": undefined,
+    "getState": [Function],
+    "mergeState": [Function],
+    "patchState": [Function],
+    "setState": [Function],
+    "use": [Function],
+    "useMemoized": [Function],
+  }
 }
 ```
 
