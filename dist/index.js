@@ -24,6 +24,7 @@ function defaultLogger(title) {
 }
 class ReactExternalStore {
   constructor(initState) {
+    var _this = this;
     this.__logger = () => null;
     this.__listeners__ = [];
     this.__state__ = undefined;
@@ -62,9 +63,12 @@ class ReactExternalStore {
      * UNSTABLE-EXPERIMENTAL
      * @param {*} selector
      */
-    this.useMemoized = selector => {
-      const memoizedSelector = (0, _react.useMemo)(() => selector, []);
-      return this.use(memoizedSelector);
+    this.useMemoized = function (selector, deps) {
+      if (deps === void 0) {
+        deps = [];
+      }
+      const memoizedSelector = (0, _react.useMemo)(() => selector, deps);
+      return _this.use(memoizedSelector);
     };
     this.getState = () => this.__state__;
     this.beforeUpdate = undefined;

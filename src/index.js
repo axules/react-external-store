@@ -71,8 +71,8 @@ export class ReactExternalStore {
    * UNSTABLE-EXPERIMENTAL
    * @param {*} selector
    */
-  useMemoized = (selector) => {
-    const memoizedSelector = useMemo(() => selector, []);
+  useMemoized = (selector, deps = []) => {
+    const memoizedSelector = useMemo(() => selector, deps);
     return this.use(memoizedSelector);
   };
 
