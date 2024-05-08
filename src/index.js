@@ -53,6 +53,14 @@ export class ReactExternalStore {
     this.__listeners__ = this.__listeners__.filter((it) => it !== callback);
   };
 
+  get state() {
+    return this.getState();
+  }
+
+  set state(value) {
+    this.setState(value);
+  }
+
   constructor(initState) {
     this.__state__ = initState;
     this.__logger('constructor', initState);

@@ -23,6 +23,12 @@ function defaultLogger(title) {
   console.debug("ReactExternalStore -> " + title, ...args);
 }
 class ReactExternalStore {
+  get state() {
+    return this.getState();
+  }
+  set state(value) {
+    this.setState(value);
+  }
   constructor(initState) {
     var _this = this;
     this.__logger = () => null;
