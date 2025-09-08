@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "eslint": "eslint --ext .js,.jsx src/",
+    "eslint": "eslint ./src --ext=js,jsx",
     "build": "npm run eslint && npm test && babel -d dist ./src/index.js"
   },
   "keywords": [
@@ -32,7 +32,7 @@
   "license": "ISC",
   "peerDependencies": {
     "deep-mutation": "3.x",
-    "react": "18.x"
+    "react": "18 - 19"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",

@@ -28,6 +28,7 @@ module.exports = {
   },
   ignorePatterns: ['node_modules', 'build'],
   rules: {
+    'linebreak-style': ['error', 'unix'],
     'arrow-spacing': ['error'],
     'keyword-spacing': ['warn'],
     'key-spacing': ['warn'],
