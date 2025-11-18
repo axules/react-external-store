@@ -27,6 +27,6 @@ describe('todoStore', () => {
     await todoStore.loadItems();
 
     await testDelay(10);
-    expect(listener).toBeCalledTimes(2);
+    expect(listener).toHaveBeenCalledTimes(2);
   });
 });

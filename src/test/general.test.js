@@ -16,7 +16,7 @@ describe('General', () => {
 
     expect(typeof unsubscribe).toBe('function');
     expect(result).toBe(initState);
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
   });
 
   test('should return call callback', async () => {
@@ -29,8 +29,8 @@ describe('General', () => {
 
     expect(result).toBe(newValue);
     await testDelay(50);
-    expect(onChange).toBeCalledTimes(1);
-    expect(onChange).toBeCalledWith(store);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(store);
   });
 
   test('should remove listener', () => {
@@ -46,6 +46,6 @@ describe('General', () => {
     store.setState({ c: 88 });
 
     expect(typeof unsubscribe).toBe('function');
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
   });
 });
