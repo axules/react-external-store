@@ -38,11 +38,9 @@ TodoStoreClass {
   "__subscribe__": [Function],
   "__unsubscribe__": [Function],
   "beforeUpdate": undefined,
-  "getState": [Function],
   "mergeState": [Function],
   "patchState": [Function],
   "setState": [Function],
   "use": [Function],
-  "useMemoized": [Function],
 }
 `;

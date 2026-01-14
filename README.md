@@ -10,23 +10,24 @@ npm install react-external-store
 
 OR install from github
 
-
 ```bash
 npm install https://git@github.com/axules/react-external-store
 ```
 
 OR add into your `package.json` file to `dependencies` section:
 
-```json
+```
 "dependencies": {
   ...
+  "react-external-store": "github:axules/react-external-store",
+  OR
   "react-external-store" : "git+https://git@github.com/axules/react-external-store.git"
 }
 ```
 
 ### Base methods and fields
 
-```json
+```
 ReactExternalStore {
   ReactExternalStore {
     "__emitChangesTask__": [Function],
@@ -34,33 +35,42 @@ ReactExternalStore {
     "__emitChanges__": [Function],
     "__listeners__": [],
     "__logger": [Function],
-    "__state__": undefined,
     "__subscribe__": [Function],
     "__unsubscribe__": [Function],
+    "state": undefined,
     "beforeUpdate": undefined,
     "getState": [Function],
     "mergeState": [Function],
     "patchState": [Function],
     "setState": [Function],
     "use": [Function],
-    "useMemoized": [Function],
   }
 }
 ```
 
-`constructor` - function(initialState)
+`constructor` - function(initialState).
 
-`getState` - returns current state.
+`state` - current state. E.g. `this.state = { ...this.state, value: 123 };`.
 
-`setState` - function(state). Sets new state. It has to be immutable. Example: `this.setState({ ...this.getState(), field: 'value' });`
+`setState` - function(state). Sets new state. It has to be immutable.
+Example:
+`this.setState({ ...this.state, field: 'value' });` 
+or `this.setState((state) => ({ ...state, field: 'value' }));`
+or `this.state = { ...this.state, field: 'value' };`.
 
-`beforeUpdate` - function(nextState, currentState). It will be called before new state applying. Result of this method will replace state.
+`beforeUpdate` - function(nextState, currentState). 
+It will be called before new state applying. Result of this method will replace state.
 
-`mergeState` - function(objectToDeepMergeIntoState). Sets and returns immutable new state as result of state and object merging. Requires `deep-mutation` dependency - `npm i deep-mutation` (https://www.npmjs.com/package/deep-mutation). Works like `mutate.deep()`. Example `this.mergeState({ field: 'value', deepField: { a: { a1: 10 } } });`
+`mergeState` - function(objectToDeepMergeIntoState). 
+Sets and returns immutable new state as result of state and object merging. 
+Requires `deep-mutation` dependency - `npm i deep-mutation` (https://www.npmjs.com/package/deep-mutation). Works like `mutate.deep()`. Example `this.mergeState({ field: 'value', deepField: { a: { a1: 10 } } });`
 
-`patchState` - function(patches). Sets and returns immutable new state with applied patches. Requires `deep-mutation` dependency - `npm i deep-mutation` (https://www.npmjs.com/package/deep-mutation). Works like `mutate()`. Example: `this.patchState({ field: 'value', 'a.a1': { 10 } });`
+`patchState` - function(patches). Sets and returns immutable new state with applied patches. 
+Requires `deep-mutation` dependency - `npm i deep-mutation` (https://www.npmjs.com/package/deep-mutation). Works like `mutate()`. Example: `this.patchState({ field: 'value', 'a.a1': { 10 } });`
 
-`use` - function(dataSelector). `dataSelector` is better to be static method to avoid extra re-subscribing. `use` have to be used instead of `useSyncExternalStore` because `use` already calls `useSyncExternalStore` with passed **dataSelector** as argument.
+`use` - function(dataSelector, deps). `dataSelector` is `function(state)` and should return stable static value from state.
+`use` have to be used instead of `useSyncExternalStore` (https://react.dev/reference/react/useSyncExternalStore) because `use`
+already calls `useSyncExternalStore` with passed **dataSelector** as second argument.
 
 `__logger` - could be overloaded by your class implementation to debug store. Or `defaultLogger` could be used - `this.__logger = defaultLogger;`.
 
@@ -71,22 +81,18 @@ ReactExternalStore {
 
 import { ReactExternalStore } from 'react-external-store';
 
-
 class TodoStoreClass extends ReactExternalStore {
-  selectStatus(state) {
-    return state.status;
-  }
-
-  selectItems(state) {
-    return state.items;
+  beforeUpdate(nextState, currentState) {
+    console.log(currentState, '->', nextState);
+    return nextState;
   }
 
   useStatus() {
-    return this.use(this.selectStatus);
+    return this.use((state) => state.status);
   }
 
   useItems() {
-    return this.use(this.selectItems);
+    return this.use((state) => state.items);
   }
 
   async loadItems() {
@@ -110,6 +116,11 @@ class TodoStoreClass extends ReactExternalStore {
   removeItem(id) {
     this.patchState([[`items[id=${id}]`]]);
   }
+  
+  addItem(text) {
+    const newItem = { id: Math.random(), text, done: false };
+    this.state = { ...this.state, items: [...this.items, newItem ]}
+  }
 }
 
 const TodoStore = new TodoStoreClass({
@@ -122,6 +133,7 @@ const TodoStore = new TodoStoreClass({
   status: { loading: false, fail: false }
 })
 
+// TodoList.jsx
 function TodoList() {
   useEffect(() => { TodoStore.loadItems(); }, []);
 
