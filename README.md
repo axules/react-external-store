@@ -1,17 +1,17 @@
-# react-external-store
+# react-sync-store
 
 It is base general class to simplify using of `useSyncExternalStore` in React components.
 
 ### Install
 
 ```bash
-npm install react-external-store
+npm install react-sync-store
 ```
 
 OR install from github
 
 ```bash
-npm install https://git@github.com/axules/react-external-store
+npm install https://git@github.com/axules/react-sync-store
 ```
 
 OR add into your `package.json` file to `dependencies` section:
@@ -19,9 +19,9 @@ OR add into your `package.json` file to `dependencies` section:
 ```
 "dependencies": {
   ...
-  "react-external-store": "github:axules/react-external-store",
+  "react-sync-store": "github:axules/react-sync-store",
   OR
-  "react-external-store" : "git+https://git@github.com/axules/react-external-store.git"
+  "react-sync-store" : "git+https://git@github.com/axules/react-sync-store.git"
 }
 ```
 
@@ -79,7 +79,7 @@ already calls `useSyncExternalStore` with passed **dataSelector** as second argu
 ```js
 // TodoStore.js
 
-import { ReactExternalStore } from 'react-external-store';
+import { ReactExternalStore } from 'react-sync-store';
 
 class TodoStoreClass extends ReactExternalStore {
   beforeUpdate(nextState, currentState) {

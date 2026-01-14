@@ -1,10 +1,10 @@
 {
-  "name": "react-external-store",
+  "name": "react-sync-store",
   "version": "1.4.0",
   "description": "Base class for React.useSyncExternalStore",
   "repository": {
     "type": "git",
-    "url": "https://github.com/axules/react-external-store"
+    "url": "https://github.com/axules/react-sync-store"
   },
   "main": "./dist/index.js",
   "files": [
