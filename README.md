@@ -1,3 +1,6 @@
+# MOVED TO https://github.com/axules/react-sync-store
+
+
 # react-sync-store
 
 It is base general class to simplify using of `useSyncExternalStore` in React components.
@@ -154,5 +157,6 @@ function TodoList() {
     </div>
   )
 }
+
 
 ```
